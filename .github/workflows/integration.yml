@@ -1,13 +1,43 @@
-name: Build Next.js web
-on: push
-jops:
-  build-project:
-    name: Build project
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
     steps:
-    - name: Checkout code
-      uses: action/checkout@v3
-    - name: Install NPM dependencies
-      run: yarn
-    - name: Build project assets
-      run: yarn build
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+      
+
+    - name: Installing my packages
+      run: npm ci
+
+    - name: Build my App  
+      run: npm run build
+      env:
+        NEXT_PUBLIC_BASE_PATH: /c-nextjs-s3-upload
+    - run: npm run export
+      env:
+        NEXT_PUBLIC_BASE_PATH: /c-nextjs-s3-upload
+    - run: touch ./out/.nojekyll
+    
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@3.5.9
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: out # The folder the action should deploy.
