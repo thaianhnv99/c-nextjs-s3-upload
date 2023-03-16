@@ -1,0 +1,13 @@
+name: Build Next.js web
+on: push
+jops:
+  build-project:
+    name: Build project
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: action/checkout@v3
+    - name: Install NPM dependencies
+      run: yarn
+    - name: Build project assets
+      run: yarn build

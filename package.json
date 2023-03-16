@@ -1,22 +1,18 @@
 {
   "name": "c-nextjs-s3-upload",
   "version": "0.1.0",
-  "homepage": "https://thaianhnv99.github.io/c-nextjs-s3-upload",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",
     "start": "next start",
-    "lint": "next lint",
-    "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build"
+    "lint": "next lint"
   },
   "dependencies": {
     "@types/node": "18.15.3",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "aws-sdk": "^2.1336.0",
-    "gh-pages": "^5.0.0",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
